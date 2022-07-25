@@ -5,13 +5,15 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "dependencies": {
-    "@sap/cds": "^5",
-    "@sap/cds-odata-v2-adapter-proxy": "^1.4.33",
-    "@sap/hana-client": "^2.5.86",
-    "express": "^4.17.1"
+    "@sap/cds": "^6",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.3",
+    "express": "^4",
+    "uuid": "^8.3.2"
   },
-  "engines": {
-    "node": "^10 || ^12"
+  "devDependencies": {
+    "@ui5/cli": "^2.14.10",
+    "sqlite3": "^5.0.4",
+    "ui5-middleware-simpleproxy": "^0.9.0"
   },
   "scripts": {
     "build": "cds build",
@@ -48,8 +50,5 @@
   "files": [
     "db",
     "srv"
-  ],
-  "devDependencies": {
-    "sqlite3": "^5.0.0"
-  }
+  ]
 }

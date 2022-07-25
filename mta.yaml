@@ -56,17 +56,6 @@ modules:
     requires:
       - name: fitrepublic-db-hdi-container
 
-  - name: ui5_fe
-    type: html5
-    path: ui5_fe
-    requires:
-      - name: ui5_160
-      - name: srv_api
-        group: destinations
-        properties:
-          name: srv_api
-          url: '~{url}'
-
   - name: ui_fe_coaches
     type: html5
     path: ui_fe_coaches

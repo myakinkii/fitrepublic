@@ -1,0 +1,154 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<f:SimpleForm editable="true" layout="ColumnLayout" maxColumnsM="2" maxColumnsL="2" adjustLabelSpan="false">
+		
+		<Label text="{i18n>excerciseVideo}" />
+		<ObjectStatus visible="{= !!${ex>videoUrl} }" 
+			state="Information"
+			active="true" icon="sap-icon://video" text="{i18n>excerciseVideoOpen}" 
+			press="contentPress" />
+			
+		<!--<core:Title text="{i18n>excerciseTargetGroup}" />-->
+		<Label text="{i18n>excerciseTarget}" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Text text="{= ${ex>target} || '-' }"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Label required="true" text="{i18n>excerciseTarget}" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}" />
+		<Input change="saveForm" fieldGroupIds="required" 
+				value="{path:'ex>target', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}" />
+		<!--<Label required="true" text="{i18n>excerciseTarget}" />-->
+		<!--<Input change="saveForm" fieldGroupIds="required" -->
+		<!--	visible="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetVisible'}"-->
+		<!--	enabled="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetEnabled'}"-->
+		<!--	value="{path:'ex>target', type:'sap.ui.model.type.String', constraints:{ minLength:2, maxLength:100 } }" />-->
+		
+		<Label text="{i18n>excerciseWarmup}"  
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Text text="{= ${ex>warmup} || '-' }"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Label text="{i18n>excerciseWarmup}"  
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}" />
+		<Input change="saveForm"
+				value="{path:'ex>warmup', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}"/>
+		<!--<Label text="{i18n>excerciseWarmup}" />-->
+		<!--<Input change="saveForm"-->
+		<!--	visible="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetVisible'}"-->
+		<!--	enabled="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetEnabled'}"-->
+		<!--	value="{path:'ex>warmup', type:'sap.ui.model.type.String', constraints:{} }" />			-->
+		
+		<Label text="{i18n>excerciseTargetComment}"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Text text="{= ${ex>targetComment} || '-' }"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetText'}" />
+		<Label text="{i18n>excerciseTargetComment}"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}" />
+		<Input change="saveForm"
+				value="{path:'ex>targetComment', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowTargetInput'}" />
+		<!--<Input change="saveForm"-->
+		<!--	visible="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetVisible'}"-->
+		<!--	enabled="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatTargetEnabled'}"-->
+		<!--	value="{ex>targetComment}" />-->
+		
+		
+		<!--<core:Title text="{i18n>excerciseResultGroup}" />-->
+		<Label text="{i18n>excerciseResult}" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultText'}"/>
+		<Text text="{= ${ex>result} || '-' }"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultText'}" />
+		<Label required="true" text="{i18n>excerciseResult}" visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultInput'}"/>
+		<Input change="saveForm" fieldGroupIds="required" 
+				showValueHelp="true" valueHelpRequest="showFastRepliesDlg"
+				value="{path:'ex>result', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultInput'}"/>
+		<!--<Label required="true" text="{i18n>excerciseResult}" />-->
+		<!--<Input change="saveForm" fieldGroupIds="required" -->
+		<!--	showValueHelp="true" valueHelpRequest="showFastRepliesDlg"-->
+		<!--	visible="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatResultVisible'}"-->
+		<!--	enabled="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatResultEnabled'}"-->
+		<!--	value="{path:'ex>result', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" />-->
+		
+		<Label text="{i18n>excerciseResultComment}" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultText'}"/>
+		<Text text="{= ${ex>resultComment} || '-' }"
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultText'}" />
+		<Label text="{i18n>excerciseResultComment}" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultInput'}"/>
+		<Input change="saveForm"
+				value="{path:'ex>resultComment', type:'sap.ui.model.type.String', constraints:{ minLength:0 } }" 
+				visible="{parts:[
+					{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+				], formatter:'.formatShowResultInput'}"/>
+		<!--<Label text="{i18n>excerciseResultComment}" />-->
+		<!--<Input change="saveForm"-->
+		<!--	visible="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatResultVisible'}"-->
+		<!--	enabled="{parts:[-->
+		<!--			{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}-->
+		<!--		], formatter:'.formatResultEnabled'}"-->
+		<!--	value="{ex>resultComment}" />-->
+		
+	</f:SimpleForm>
+</core:FragmentDefinition>

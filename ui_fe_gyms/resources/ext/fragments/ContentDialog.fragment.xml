@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		noDataText="{@i18n>noContentFound}"
+		title="{@i18n>selectCoach}"
+		multiSelect="false"
+		showClearButton="false"
+		search=".onSearch"
+		confirm=".onDialogClose"
+		cancel=".onDialogClose"
+		items="{
+			path: '/Content',
+			parameters: { expand: 'author' },
+			_sorter: {
+				path: 'author/name',
+				descending: false
+			}
+		}">
+		<StandardListItem title="{title} {subtitle}" description="{author/name}" type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

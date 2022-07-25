@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Popover placement="Bottom" contentHeight="320px" showHeader="false" title="{i18n>authExportPopoverTitle}">
+		<Panel>
+			<headerToolbar>
+				<Toolbar>
+					<ToolbarSpacer />
+					<Button visible="{= !!${deviceId} }"
+						text="{@i18n>copySecret}" 
+						icon="sap-icon://copy"
+						press="copyProfileSecret" />
+				</Toolbar>
+			</headerToolbar>
+			<core:HTML content='&lt;div style=&quot;width:100%;height:250px;&quot; id=&quot;qrcode&quot;&gt; &lt;/div&gt;'/>
+		</Panel>
+	</Popover>
+</core:FragmentDefinition>

@@ -1,0 +1,56 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Exercise" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	xmlns:core="sap.ui.core"
+	height="100%">
+	<ObjectPageLayout upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true"
+		sections="{path: 'ex>atts', sorter:{path:'exNum'} }" >
+
+		<headerTitle>
+			<ObjectPageHeader
+				objectTitle="{parts:[{path:'ex>repeat'},{path:'ex>asSet'}],formatter:'.formatExNum'}"
+				_objectSubtitle="{ex>repeat}"
+				objectImageShape="Circle"
+				objectImageURI="sap-icon://physical-activity"
+				isObjectTitleAlwaysVisible="false"
+				isObjectSubtitleAlwaysVisible="false"
+				isActionAreaAlwaysVisible="true"
+				showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+					<m:Link text="{i18n>navWorkout}" visible="{= ${ex>ptype}!=='T' }" press="goToWorkout"/>
+					<m:Link text="{i18n>navTemplate}" visible="{= ${ex>ptype}==='T' }" press="goToTemplate"/>
+				</breadCrumbsLinks>					
+				<actions>
+					<ObjectPageHeaderActionButton 
+						icon="sap-icon://fob-watch" text="{i18n>workoutShowStopWatch}"
+						visible="{parts:[
+								{path:'profile>/isCoach'},{path:'ex>ptype'},{path:'ex>status'}
+							], formatter:'.formatShowStopWatch'}"
+						press="showStopWatch" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>
+
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="{ex>name}">
+				<ObjectPageSubSection title="{ex>name}">
+					<m:Panel>
+						<m:content>
+							<core:Fragment fragmentName="ru.fitrepublic.shared.fragments.ExcerciseScreenForm" type="XML" />
+						</m:content>
+					</m:Panel>
+				</ObjectPageSubSection>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

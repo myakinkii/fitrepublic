@@ -1,0 +1,56 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.MyTemplates" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>mytemplatesPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+
+	<List id="templateList"
+		growing="true" 
+		growingThreshold="10"
+		items="{ 
+			path:'odata>/Templates', 
+			sorter:[
+				{path:'category',group:true},
+				{path:'subscriptionsCount',descending:true},
+				{path:'workoutsCount',descending:true}
+			],
+			groupHeaderFactory: '.getGroupHeader'
+		}">
+		<ObjectListItem
+			title="{odata>name}"
+			number="{odata>subscriptionsCount}"
+			type="Navigation"
+			press="goToTemplate">
+			<firstStatus>
+				<ObjectStatus
+					text="{ path:'odata>type', formatter:'.formatType' }"
+					state="{= ${odata>type}==='S'?'Success':'Warning' }" />
+			</firstStatus>
+			<ObjectAttribute text="{odata>workoutsCount} {i18n>templateWorkouts}" />
+		</ObjectListItem>
+	</List>	
+	
+	<footer>
+		<Toolbar>
+			<ToolbarSpacer />
+			<Button icon="sap-icon://add" press="createTemplate" />
+		</Toolbar>
+	</footer>
+
+</Page>
+</mvc:View>

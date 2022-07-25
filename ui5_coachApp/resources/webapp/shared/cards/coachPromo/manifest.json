@@ -1,0 +1,56 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.coachPromo",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				}			
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"type": "Numeric",
+			"data": {
+				"request": {
+					"url": "{{destinations.odata}}/MyPromosCount?device={{parameters.deviceId}}&token={{parameters.authToken}}"
+				},
+				"path": "/d/results/0"
+			},
+			"unitOfMeasurement": "",
+			"mainIndicator": {
+				"number": "{activated} / {total}",
+				"unit": "",
+				"_trend": "Up",
+				"_state": "Good"
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"promos"}
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,40 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Workouts" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>workoutsPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+	<SearchField search="handleSearch" />
+	<List id="workouts"
+		growing="true" 
+		growingThreshold="10"
+		items="{path:'odata>/ClientWorkouts', sorter:{path:'workoutDate',descending:true} }">
+		<ObjectListItem type="Navigation" press="goToWorkout" 
+			title="{path:'odata>workoutDate',formatter:'.formatWorkoutTimestamp'}"
+			intro="{ parts:[{path:'odata>purchaseType'},{path:'odata>coachName'},{path:'odata>coachNickName'}], formatter:'.formatWorkoutIntro' } "
+			_intro="{odata>coachName} ({odata>coachNickName})">
+			<firstStatus>
+				<ObjectStatus
+					text="{ path:'odata>workoutStatus', formatter:'.formatWorkoutStatus' }"
+					state="{= ${odata>workoutStatus}==='E'?'Success':'Warning' }" />
+			</firstStatus>
+			<ObjectAttribute text="{odata>workoutDescr}" />
+			<ObjectAttribute text="{ parts:[{path:'odata>purchaseType'},{path:'odata>purchaseDescr'}], formatter:'.formatWorkoutPurchase' }" />
+		</ObjectListItem>
+	</List>
+</Page>
+</mvc:View>

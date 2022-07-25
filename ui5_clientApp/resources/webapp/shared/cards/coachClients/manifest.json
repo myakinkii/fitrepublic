@@ -1,0 +1,62 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.coachClients",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				}			
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle":"{i18n>clientsTotal}",
+			"type": "Numeric",
+			"data": {
+				"request": {
+					"url": "{{destinations.odata}}/CoachClientsTotal?device={{parameters.deviceId}}&token={{parameters.authToken}}"
+				},
+				"path": "/d/results/0"
+			},
+			"_unitOfMeasurement": "{i18n>clientsTotal}",
+			"mainIndicator": {
+				"number": "{clients}",
+				"_unit": "{i18n>clientsTotal}",
+				"trend": "Up",
+				"state": "Good"
+			},
+			"sideIndicators": [
+				{
+					"title": "{i18n>clientsWorkouts}",
+					"number": "{total}"
+				}
+			],
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"clients"}
+				}
+			]
+		}
+	}
+}

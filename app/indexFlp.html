@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>fit-republic</title>
+
+	<script>
+	window["sap-ushell-config"] = {
+		defaultRenderer: "fiori2",
+		applications: {
+			"coaches-manage": {
+				title: "Coaches",
+				description: "",
+				additionalInformation: "SAPUI5.Component=ru.fitrepublic.ui_fe_coaches",
+				applicationType : "URL",
+				url: "/coaches",
+				navigationMode: "embedded"
+			},
+			"gyms-manage": {
+				title: "Gyms",
+				description: "",
+				additionalInformation: "SAPUI5.Component=ru.fitrepublic.ui_fe_gyms",
+				applicationType : "URL",
+				url: "/gyms",
+				navigationMode: "embedded"
+			},
+			"promos-manage": {
+				title: "Promos",
+				description: "",
+				additionalInformation: "SAPUI5.Component=ru.fitrepublic.ui_fe_promos",
+				applicationType : "URL",
+				url: "/promos",
+				navigationMode: "embedded"
+			},
+			"purchases-manage": {
+				title: "Purchases",
+				description: "",
+				additionalInformation: "SAPUI5.Component=ru.fitrepublic.ui_fe_purchases",
+				applicationType : "URL",
+				url: "/purchases",
+				navigationMode: "embedded"
+			},
+			"settings-manage": {
+				title: "Settings",
+				description: "",
+				additionalInformation: "SAPUI5.Component=ru.fitrepublic.ui_fe_settings",
+				applicationType : "URL",
+				url: "/settings",
+				navigationMode: "embedded"
+			}
+		}
+	};
+	</script>
+
+	<script id="sap-ushell-bootstrap" 
+		src="https://sapui5.hana.ondemand.com/test-resources/sap/ushell/bootstrap/sandbox.js">
+	</script>
+
+    <script id="sap-ui-bootstrap" 
+		src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+    	data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
+    	data-sap-ui-compatVersion="edge"
+    	data-sap-ui-theme="sap_fiori_3"
+		data-sap-ui-logLevel="error"
+		data-sap-ui-resourceroots='{
+			"ru.fitrepublic.flp": "./"
+		}'
+		data-sap-ui-oninit="module:ru/fitrepublic/flp/initFlp"
+    	data-sap-ui-frameOptions="allow" >
+    </script>
+
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

@@ -1,0 +1,87 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_clientApp.controller.Template" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	height="100%">
+	<ObjectPageLayout id="objectPageLayout" 
+		upperCaseAnchorBar="false" 
+		_subSectionLayout="TitleOnLeft" 
+		showTitleInHeaderContent="true"
+		sections="{path: 'ex>/workouts', sorter:{path:'description'} }" 
+		_sections="{path: 'odata>workouts', sorter:{path:'description'} }" >
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{odata>name}"
+							  objectSubtitle="{odata>category}"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://e-learning"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>templatePageTitleClient}"/>
+						</m:contentMiddle>
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+					<m:Link text="{i18n>navCoach}" press="navCoach"/>
+				</breadCrumbsLinks>				
+				<actions>
+					<ObjectPageHeaderActionButton icon="sap-icon://add-employee" text="{i18n>templateSubscribe}" press="makeSubscription" />
+					<ObjectPageHeaderActionButton visible="{= ${odata>shared}===true }" icon="sap-icon://action" text="{i18n>genericShare}" press="shareObject" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>	
+		
+		<headerContent>
+			<m:Link visible="{= ${odata>shared}===true }" text="{i18n>templateCoverVideo}" press="coverPress"/>
+			<m:ObjectNumber number="{odata>subscriptionsCount}" numberUnit="{i18n>templateSubs}"/>
+			<m:Text text="{odata>description}" />
+		</headerContent>
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="{i18n>templateSectionWorkouts}"  >
+				<ObjectPageSubSection title="{ex>description}">
+					<blocks>
+						<m:Panel>
+							<m:content>
+								<m:List _id="excercisesList" 
+									selectionChange="selectExcercise"
+									mode="None"
+									items="{
+										path:'ex>ex', 
+										sorter:[
+											{ path:'ex>num', descending:false}
+										]
+									}">
+									<m:ObjectListItem
+										_highlight="{= ${ex>completed}?'Success':${ex>started}?'Warning':'None' }"
+										type="Navigation"
+										press="goToEx"
+										title="{parts:[{path:'ex>repeat'},{path:'ex>asSet'}],formatter:'.formatExNum'}"
+										number="{ex>num}"
+										attributes="{ex>atts}">
+										<m:attributes>
+											<m:ObjectAttribute 
+												title="{ex>name}" 
+												text="{= ${ex>result} || ${ex>target} }"  />
+										</m:attributes>
+									</m:ObjectListItem>
+								</m:List>
+							</m:content>
+						</m:Panel>
+					</blocks>
+				</ObjectPageSubSection>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

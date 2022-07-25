@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core">
+	<Dialog showHeader="false" >
+		<subHeader>
+			<Toolbar>
+				<ToolbarSpacer />
+				<Button icon="sap-icon://reset" text="{i18n>stopWatchReset}" press="reset" />
+				<!--<ToolbarSpacer />-->
+				<!--<Button icon="sap-icon://save" text="{i18n>stopWatchApply}" press="apply" />-->
+				<!--<ToolbarSpacer />				-->
+				<Button icon="sap-icon://decline" text="{i18n>stopWatchClose}" press="closeDlg" />
+			</Toolbar>
+		</subHeader>
+		<beginButton>
+			<Button icon="sap-icon://save" type="Emphasized" visible="{= !${/running} &amp;&amp; ${/duration}>0 }" text="{i18n>stopWatchApply}" press="apply" />
+		</beginButton>
+		<endButton>
+			<ToggleButton icon="{path:'/running',formatter:'.toIcon'}" text="{path:'/running',formatter:'.toText'}" press="stoprun" />
+		</endButton>
+			<FlexBox alignItems="Center" justifyContent="Center">
+				<NumericContent width="6rem" value="{path:'/duration',formatter:'.toHours'}" scale=":" valueColor="Good" icon="sap-icon://fob-watch" />
+				<NumericContent width="3rem" value="{path:'/duration',formatter:'.toMinutes'}" scale=":" valueColor="Good" withMargin="false" class="sapUiTinyMarginBegin" />
+				<NumericContent width="3rem" value="{path:'/duration',formatter:'.toSeconds'}" scale="" valueColor="Good"  withMargin="false" class="sapUiTinyMarginBegin" />
+			</FlexBox>
+	</Dialog>
+</core:FragmentDefinition>

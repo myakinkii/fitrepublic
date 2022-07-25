@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>myclientsNotesDlgTitle} - {odata>client/nickName}">
+		<beginButton>
+			<Button text="{i18n>genericSave}" type="Emphasized" press="saveChanges" />
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" press="closeDlg"/>
+		</endButton>
+		<TextArea width="100%" rows="10" maxLength="1000" value="{odata>text}" />
+	</Dialog>
+</core:FragmentDefinition>

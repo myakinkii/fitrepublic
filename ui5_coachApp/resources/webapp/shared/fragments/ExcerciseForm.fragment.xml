@@ -1,0 +1,33 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+		
+		<Label required="true" text="{i18n>excerciseSetNum}" />
+		<StepInput step="1" min="0"
+			value="{path: 'odata>setNum', type:'sap.ui.model.odata.type.Int' }" />
+		<Label required="true" text="{i18n>excerciseNum}" />
+		<StepInput step="1" min="1"
+			value="{path: 'odata>exNum', type:'sap.ui.model.odata.type.Int' }" />
+		<Label required="true" text="{i18n>excerciseRepeat}" />
+		<StepInput step="1" min="1"
+			value="{path: 'odata>repeat', type:'sap.ui.model.odata.type.Int' }" />
+		
+		<Label required="true" text="{i18n>excerciseName}" />
+		<Input fieldGroupIds="required" change="validateForm"
+			value="{path:'odata>name', type:'sap.ui.model.type.String', constraints:{minLength:5, maxLength:100} }" />
+			
+		<Label required="true" text="{i18n>excerciseTarget}" />
+		<Input fieldGroupIds="required" change="validateForm"
+			value="{path:'odata>target', type:'sap.ui.model.type.String', constraints:{minLength:2, maxLength:100} }" />
+			
+		<Label text="{i18n>excerciseWarmup}" />
+		<Input value="{path:'odata>warmup', type:'sap.ui.model.type.String', constraints:{ maxLength:100 } }"   />			
+		<Label text="{i18n>excerciseTargetComment}" />
+		<Input value="{path:'odata>targetComment', type:'sap.ui.model.type.String', constraints:{ maxLength:100 } }"   />
+
+	</f:SimpleForm>
+</core:FragmentDefinition>

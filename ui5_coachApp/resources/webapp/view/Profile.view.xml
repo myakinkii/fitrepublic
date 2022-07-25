@@ -1,0 +1,94 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Profile" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+<Page title="{i18n>profilePageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<content>
+	
+		<Panel>
+			<List headerText="{i18n>profileSettingsList}" >
+				
+				<GroupHeaderListItem title="{i18n>profilePersonalGroup}" />
+				
+				<InputListItem label="{i18n>profileName}" >
+					<Input width="15rem" value="{/profile/name}" enabled="false" />
+				</InputListItem>
+				<InputListItem label="{i18n>profileNickName}">
+					<Input width="15rem" value="{/profile/nickName}" />
+				</InputListItem>
+				
+				<GroupHeaderListItem title="{i18n>profileCardsGroup}" />
+				
+				<InputListItem label="{i18n>profileProfileCard}">
+					<Switch state="true" enabled="false" />
+				</InputListItem>
+				<InputListItem visible="{/cards/coachPromo/visible}" label="{i18n>profilePromoCard}">
+					<Switch state="{/cards/coachPromo/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/coachClients/visible}" label="{i18n>profileClientsCard}">
+					<Switch state="{/cards/coachClients/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/coachPrograms/visible}" label="{i18n>profileProgramsCard}">
+					<Switch state="{/cards/coachPrograms/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/calendar/visible}" state="{/cards/calendar/visible}" label="{i18n>profileCalendarCard}">
+					<Switch state="{/cards/calendar/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/chatMessages/visible}" label="{i18n>profileChatMessagesCard}">
+					<Switch state="{/cards/chatMessages/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/coachBilling/visible}" label="{i18n>profileMoneyCard}">
+					<Switch state="{/cards/coachBilling/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/purchaseList/visible}" label="{i18n>profilePurchasesCard}">
+					<Switch state="{/cards/purchaseList/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/clientList/visible}" label="{i18n>profileClientsCard}">
+					<Switch state="{/cards/clientList/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				<InputListItem visible="{/cards/templateList/visible}" label="{i18n>profileTemplatesCard}">
+					<Switch state="{/cards/templateList/state}" change="toggleHiddenCards"/>
+				</InputListItem>
+				
+				<GroupHeaderListItem title="{i18n>profileThemeGroup}" />
+				<InputListItem label="{i18n>profileDarkTheme}">
+					<Switch state="{/darkTheme}" change="toggleDarkTheme" />
+				</InputListItem>
+				
+                <GroupHeaderListItem title="{i18n>profileHelpGroup}" />
+                <InputListItem label="{i18n>profileWatchTutorial}">
+                    <Link text="youtube" press="showTutorial" />
+                </InputListItem>
+                <!--<InputListItem label="{i18n>profileOpenHelp}">-->
+                <!--    <Link text="manual.pdf" target="_blank" href="http://backend.fit-republic.ru/docs/coach/manual.pdf" />-->
+                <!--</InputListItem>-->
+			</List>
+		</Panel>
+		
+		<!--<Panel headerText="{i18n>profileGymsList}" expandable="true" expanded="false" >-->
+		<!--	<List items="{ path:'/gyms', sorter:{ path:'type', group:true }, groupHeaderFactory: '.getGroupHeader' }">-->
+		<!--		<InputListItem label="{name} ({addr})" type="Navigation" press="goToGym">-->
+		<!--			<CheckBox selected="{selected}" select="handleGymToggle" />-->
+		<!--		</InputListItem>-->
+		<!--	</List>-->
+		<!--</Panel>-->
+		
+		<Panel visible="{= !!${profile>/shared} }" headerText="{i18n>profileShareQr}" >
+			<FlexBox justifyContent="Center">
+				<core:HTML content='&lt;div style=&quot;width:250px;height:250px;padding:20px;background-color:#fafafa;&quot; id=&quot;qrcode&quot;&gt; &lt;/div&gt;'/>
+			</FlexBox>
+		</Panel>
+		
+	</content>
+	<footer>
+		<Toolbar>
+			<Button type="Reject" icon="sap-icon://reset" text="{i18n>profileReset}" press="resetProfile" />
+			<ToolbarSpacer />
+			<Button press="copyProfileSecret" />
+			<ToolbarSpacer />
+			<Button _type="Reject" icon="sap-icon://save" text="{i18n>genericSave}" press="updateProfile" />
+		</Toolbar>
+	</footer>
+</Page>
+</mvc:View>

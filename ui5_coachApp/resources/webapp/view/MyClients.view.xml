@@ -1,0 +1,40 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.MyClients" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>myclientsPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+	<SearchField search="handleSearch" />
+	<List id="clientList"
+		growing="true" 
+		growingThreshold="10"
+		items="{path:'odata>/CoachClients', sorter:{path:'recentWorkout',descending:true} }">
+		<ObjectListItem
+			intro="{i18n>myclientsMaxWorkoutDate}: { path:'odata>recentWorkout', type:'sap.ui.model.type.DateTime', formatOptions:{ style:'medium' } }"
+			title="{odata>clientNickName}"
+			number="{odata>workouts}"
+			numberUnit="{i18n>myclientWorkouts}"
+			type="Navigation" 
+			press="goToClient">
+			<ObjectAttribute visible="{= !!${odata>purch_R} }" text="{i18n>myclientsPurchase_R}" />
+			<ObjectAttribute visible="{= !!${odata>purch_O} }" text="{i18n>myclientsPurchase_O}" />
+			<ObjectAttribute visible="{= !!${odata>purch_G} }" text="{i18n>myclientsPurchase_G}" />
+			<ObjectAttribute visible="{= !!${odata>purch_S} }" text="{i18n>myclientsPurchase_S}" />
+		</ObjectListItem>
+	</List>
+</Page>
+</mvc:View>

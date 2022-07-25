@@ -1,0 +1,75 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.clientList",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"data": {
+			"request": {
+				"url": "{{destinations.odata}}/MyClients?device={{parameters.deviceId}}&token={{parameters.authToken}}&$inlinecount=allpages"
+			}
+		},
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				},
+				"maxItems": {
+					"value": 5,
+					"type": "integer",
+					"label": "Maximum number of items",
+					"description": "Defines how many items will be displayed at most."
+				}
+			}
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{{SUBTITLE}}",
+			"status": {
+				"text": "{parameters>/visibleItems} of {/d/__count}"
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"clients"}
+				}
+			]
+		},
+		"content": {
+			"data": { "path": "/d/results" },
+			"maxItems": "{{parameters.maxItems}}",
+			"item": {
+				"title": "{nickName}",
+				"description": "{i18n>purchases}: {purchases}",
+				"info": {
+					"value": "{= format.integer(${money}, {groupingEnabled:true, style:'short'}) }",
+					"state": "Success"
+				},
+				"actions": [
+					{
+						"type": "Custom",
+						"enabled": true,
+						"parameters" :{ "dst":"displayNotes","vars":{"id":"{clientId}"} }
+					}
+				]
+			}
+		}
+	}
+}

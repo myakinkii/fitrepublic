@@ -1,0 +1,126 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.Template" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:m="sap.m"
+	height="100%">
+	<ObjectPageLayout id="objectPageLayout" upperCaseAnchorBar="false" _subSectionLayout="TitleOnLeft" showTitleInHeaderContent="true">
+
+		<headerTitle>
+			<ObjectPageHeader objectTitle="{odata>name}"
+							  objectSubtitle="{odata>category}"
+							  objectImageShape="Circle"
+							  objectImageURI="sap-icon://e-learning"
+							  isObjectTitleAlwaysVisible="false"
+							  isObjectSubtitleAlwaysVisible="false"
+							  isActionAreaAlwaysVisible="true"
+							  showPlaceholder="true">
+				<navigationBar>
+					<m:Bar>
+						<m:contentLeft>
+							<m:Button icon="sap-icon://nav-back" tooltip="nav-back" press="navBack" />
+						</m:contentLeft>
+						<m:contentMiddle>
+							<m:Text text="{i18n>templatePageTitle}"/>
+						</m:contentMiddle>
+					</m:Bar>
+				</navigationBar>
+				<breadCrumbsLinks>
+					<m:Link text="{i18n>navHome}" press="navHome"/>
+					<m:Link text="{i18n>navTemplates}" press="navTemplates"/>
+				</breadCrumbsLinks>				
+				<actions>
+					<ObjectPageHeaderActionButton icon="sap-icon://add" visible="{= ${odata>type}==='P' }" text="{i18n>templateAddWorkout}" press="addWorkout" />
+					<ObjectPageHeaderActionButton icon="sap-icon://delete" visible="{= ${odata>type}==='P' }" text="{i18n>genericDelete}" press="deleteTemplate" />
+					<ObjectPageHeaderActionButton icon="sap-icon://save" _visible="{= ${odata>type}!=='S' }" text="{i18n>genericSave}" press="saveTemplate" />
+				</actions>
+			</ObjectPageHeader>
+		</headerTitle>	
+		
+		<headerContent>
+			<m:ObjectStatus title="{i18n>templateType}" text="{path:'odata>type', formatter:'.formatTemplateType' }" state="{= ${odata>type}==='P'?'Success':'Warning' }" />
+			<m:ObjectStatus _title="{i18n>templateDescription}" text="{odata>description}" />
+		</headerContent>
+
+		<sections>
+
+			<ObjectPageSection titleUppercase="false" title="{i18n>templateSectionDescription}">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>templateSectionDescription}">
+						<blocks>
+							<m:Panel>
+								
+								<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+									<!--<core:Title text="{i18n>templatePars}" />	-->
+									<m:Label text="{i18n>templateName}" />
+									<m:Input value="{odata>name}" />
+									<m:Label text="{i18n>templateCategory}" />
+									<m:Input value="{odata>category}" />
+									<m:Label text="{i18n>templateDescription}" />
+									<m:Input value="{odata>description}" />
+								</f:SimpleForm>
+								
+							</m:Panel>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			
+			<ObjectPageSection titleUppercase="false" title="{i18n>templateSectionWorkouts}"
+				subSections="{path: 'ex>/workouts', sorter:{path:'description'} }" 
+				_subSections="{path: 'odata>workouts', sorter:{path:'description'} }" >
+				<ObjectPageSubSection title="{ex>description}">
+					<blocks>
+						<m:Panel>
+							<m:headerToolbar>
+								<m:OverflowToolbar>
+									<m:Title text="{ex>description}" />
+									<m:ToolbarSpacer />
+									<m:Button press="editWorkoutDescription" icon="sap-icon://edit" />
+									<m:Button press="deleteWorkout" icon="sap-icon://delete" />
+								</m:OverflowToolbar>
+							</m:headerToolbar>	
+							<m:content>
+								<m:List _id="excercisesList" 
+									selectionChange="selectExcercise"
+									mode="SingleSelectLeft"
+									items="{
+										path:'ex>ex', 
+										sorter:[
+											{ path:'ex>num', descending:false}
+										]
+									}">
+									<m:headerToolbar>
+										<m:OverflowToolbar>
+											<m:Title text="{i18n>templateSectionWorkoutExcercises}"/>
+											<m:ToolbarSpacer />
+											<m:Button icon="sap-icon://add-process" press="addExcercise" />
+											<m:Button icon="sap-icon://edit" enabled="{= ${ex>editable} }" press="editExcercise" />
+											<m:Button icon="sap-icon://delete" enabled="{= ${ex>editable} }" press="deleteExcercise" />
+										</m:OverflowToolbar>											
+									</m:headerToolbar>
+									<m:ObjectListItem
+										_highlight="{= ${ex>completed}?'Success':${ex>started}?'Warning':'None' }"
+										type="Navigation"
+										press="goToEx"
+										title="{parts:[{path:'ex>repeat'},{path:'ex>asSet'}],formatter:'.formatExNum'}"
+										number="{ex>num}"
+										attributes="{ex>atts}">
+										<m:attributes>
+											<m:ObjectAttribute 
+												title="{ex>name}" 
+												text="{= ${ex>result} || ${ex>target} }"  />
+										</m:attributes>
+									</m:ObjectListItem>
+								</m:List>
+							</m:content>
+						</m:Panel>
+					</blocks>
+				</ObjectPageSubSection>
+			</ObjectPageSection>
+
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

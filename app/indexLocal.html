@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>fit-republic</title>
+
+	<script>
+		window["sap-ushell-config"] = {
+			"defaultRenderer": "fiori2",
+			"renderers": {
+					"fiori2": {
+						"componentData": {
+							"config": {
+								"rootIntent": "Shell-Home",
+								"search": "hidden"
+							}
+						}
+					}
+				},
+			"services": {
+				"LaunchPage": {
+					"adapter": {
+						"config": {
+							"groups": [
+							{
+								"id": "sample_group",
+								"title": "Dashboard",
+								"isPreset": true,
+								"isVisible": true,
+								"isGroupLocked": false,
+								"tiles": [
+									{
+										"id": "coaches",
+										"title": "Coaches",
+										"size": "1x1",
+										"tileType": "sap.ushell.ui.tile.StaticTile",
+										"properties": {
+											"chipId": "catalogTile_00",
+											"title": "Coaches",
+											"icon": "sap-icon://Fiori2/F0001",
+											"targetURL": "#coaches-manage"
+										}
+									},
+									{
+										"id": "gyms",
+										"title": "Gyms",
+										"size": "1x1",
+										"tileType": "sap.ushell.ui.tile.StaticTile",
+										"properties": {
+											"chipId": "catalogTile_01",
+											"title": "Gyms",
+											"icon": "sap-icon://Fiori2/F0001",
+											"targetURL": "#gyms-manage"
+										}
+									},
+									{
+										"id": "promos",
+										"title": "Promos",
+										"size": "1x1",
+										"tileType": "sap.ushell.ui.tile.StaticTile",
+										"properties": {
+											"chipId": "catalogTile_02",
+											"title": "Promos",
+											"icon": "sap-icon://Fiori2/F0001",
+											"targetURL": "#promos-manage"
+										}
+									},
+									{
+										"id": "purchases",
+										"title": "Purchases",
+										"size": "1x1",
+										"tileType": "sap.ushell.ui.tile.StaticTile",
+										"properties": {
+											"chipId": "catalogTile_03",
+											"title": "Purchases",
+											"icon": "sap-icon://Fiori2/F0001",
+											"targetURL": "#purchases-manage"
+										}
+									},
+									{
+										"id": "settings",
+										"title": "Settings",
+										"size": "1x1",
+										"tileType": "sap.ushell.ui.tile.StaticTile",
+										"properties": {
+											"chipId": "catalogTile_04",
+											"title": "Settings",
+											"icon": "sap-icon://Fiori2/F0001",
+											"targetURL": "#settings-manage"
+										}
+									}
+								]
+							}
+							]
+						}
+					}
+				},
+				"NavTargetResolution": {
+					"config": {
+					"enableClientSideTargetResolution": true
+					}
+				},
+				"ClientSideTargetResolution": {
+					"adapter": {
+						"config": {
+							"inbounds": {
+								"actionToCoaches": {
+									"semanticObject": "coaches",
+									"action": "manage",
+									"title": "Coaches",
+									"signature": {
+										"parameters": {},
+										"additionalParameters": "allowed"
+									},
+									"resolutionResult": {
+										"applicationType": "SAPUI5",
+										"additionalInformation": "SAPUI5.Component=ru.fitrepublic.ui_fe_coaches",
+										"url": "./coaches"
+									}
+								},
+								"actionToGyms": {
+									"semanticObject": "gyms",
+									"action": "manage",
+									"title": "Gyms",
+									"signature": {
+										"parameters": {},
+										"additionalParameters": "allowed"
+									},
+									"resolutionResult": {
+										"applicationType": "SAPUI5",
+										"additionalInformation": "SAPUI5.Component=ru.fitrepublic.ui_fe_gyms",
+										"url": "./gyms"
+									}
+								},
+								"actionToPromos": {
+									"semanticObject": "promos",
+									"action": "manage",
+									"title": "Promos",
+									"signature": {
+										"parameters": {},
+										"additionalParameters": "allowed"
+									},
+									"resolutionResult": {
+										"applicationType": "SAPUI5",
+										"additionalInformation": "SAPUI5.Component=ru.fitrepublic.ui_fe_promos",
+										"url": "./promos"
+									}
+								},
+								"actionToPurchases": {
+									"semanticObject": "purchases",
+									"action": "manage",
+									"title": "Purchases",
+									"signature": {
+										"parameters": {},
+										"additionalParameters": "allowed"
+									},
+									"resolutionResult": {
+										"applicationType": "SAPUI5",
+										"additionalInformation": "SAPUI5.Component=ru.fitrepublic.ui_fe_purchases",
+										"url": "./purchases"
+									}
+								},
+								"actionToSettings": {
+									"semanticObject": "settings",
+									"action": "manage",
+									"title": "Settings",
+									"signature": {
+										"parameters": {},
+										"additionalParameters": "allowed"
+									},
+									"resolutionResult": {
+										"applicationType": "SAPUI5",
+										"additionalInformation": "SAPUI5.Component=ru.fitrepublic.ui_fe_settings",
+										"url": "./settings"
+									}
+								},
+							}
+						}
+					}
+				}
+			}
+		};
+		window["sap-ui-config"] = {
+			"xx-bootTask": function(fnCallback){
+				sap.ui.require(["sap/ushell/services/Container"], function(tools) {
+					sap.ushell.bootstrap("local").done(fnCallback);
+				});
+			}
+    	};
+	</script>
+
+    <script id="sap-ui-bootstrap" 
+		src="/resources/sap-ui-core.js"
+    	data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout"
+    	data-sap-ui-compatVersion="edge"
+    	data-sap-ui-theme="sap_fiori_3"
+		data-sap-ui-logLevel="error"
+		data-sap-ui-resourceroots='{ "ru.fitrepublic.flp": "./" }'
+		data-sap-ui-oninit="module:ru/fitrepublic/flp/initFlp"
+    	data-sap-ui-frameOptions="allow" >
+    </script>
+
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

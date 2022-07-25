@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		noDataText="{@i18n>noCoachesFound}"
+		title="{@i18n>selectCoach}"
+		multiSelect="false"
+		showClearButton="false"
+		search=".onSearch"
+		confirm=".onDialogClose"
+		cancel=".onDialogClose"
+		items="{
+			path: '/Coaches',
+			sorter: {
+				path: 'name',
+				descending: false
+			}
+		}">
+		<StandardListItem title="{name}" description="{nickName}" type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>mypromoCodesDlgTitle}">
+		<beginButton>
+			<Button visible="{= !${/promoCode} }" text="{i18n>genericCreate}" type="Emphasized" press="createPromo" />
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericClose}" press="closeDlg"/>
+		</endButton>
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+			<Label text="{i18n>promoCode}" />
+			<Button enabled="{= !!${/promoCode} }" type="Ghost" icon="sap-icon://copy" press="copyCode" >
+				<layoutData> <l:GridData span="XL1 L1 M2 S2" /> </layoutData>
+			</Button>
+			<Text text="{/promoCode}" >
+				<layoutData> <l:GridData span="XL6 L8 M8 S8" /> </layoutData>
+			</Text>
+			<Label text="{i18n>promoDescription}" />
+			<Input enabled="{= !${/promoCode} }" value="{/promoDescription}" />
+			<Label text="{i18n>promoType}" />
+			<RadioButton
+				valueState="Success"
+				groupName="rbGrp"
+				enabled="{= !${/promoCode} }"
+				select="selectType"
+				custom:promoType="O"
+				selected="{= ${/promoType}==='O' }"
+				text="{i18n>promoType_O}" />
+			<!--<Label text="Gym" />-->
+			<RadioButton
+				valueState="Warning"
+				groupName="rbGrp"
+				enabled="{= !${/promoCode} }"
+				select="selectType"
+				custom:promoType="G"
+				selected="{= ${/promoType}==='G' }"
+				text="{i18n>promoType_G}" />
+		</f:SimpleForm>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>scheduleDisplayEditDlgTitleWkt}">
+		<customHeader>
+			<Toolbar >
+				<Title text="{i18n>scheduleDisplayEditDlgTitle}" />
+				<ToolbarSpacer />
+				<Button icon="sap-icon://open-command-field" press="navToWorkout" />
+			</Toolbar>
+		</customHeader>
+		<beginButton>
+			<Button text="{i18n>genericSave}" visible="{= ${odata>status}==='S' &amp;&amp; ( ${profile>/isClient} || ${odata>purchase/type}==='G' ) }" type="Emphasized" press="submitChanges"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericClose}" press="closeDlg"/>
+		</endButton>
+		<l:VerticalLayout class="sapUiContentPadding" width="100%">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" singleContainerFullSize="false">
+				<Label required="true" text="{i18n>scheduleDate}" />
+				<DateTimePicker fieldGroupIds="required" change="validateForm"
+					minutesStep="30" 
+					editable="{= ${odata>status}==='S' &amp;&amp; ( ${profile>/isClient} || ${odata>purchase/type}==='G' ) }"
+					value="{
+						path:'odata>timestamp', 
+						type:'sap.ui.model.type.DateTime', 
+						constraints: {nullable : false},
+						formatOptions: { style: 'short', strictParsing: false}
+					}" />
+				<Label text="{i18n>scheduleDescription}" />
+				<Input value="{path:'odata>description'}" _enabled="{= ${profile>/isCoach} }" enabled="false" visible="{= !!${odata>description} }" />
+				<Label text="{i18n>scheduleGym}" />
+				<!--<Input value="{path:'odata>purchase/gym/name'}" enabled="false" />-->
+				<Input value="{= ${odata>purchase/description} || ${odata>purchase/gym/name} }" enabled="false" />
+				<Label text="{i18n>scheduleCoach}" />
+				<Input value="{path:'odata>coach/name'}" enabled="false" visible="{profile>/isClient}"/>
+				<Label text="{i18n>scheduleClient}" />
+				<Input value="{path:'odata>client/nickName'}" enabled="false" visible="{profile>/isCoach}"/>				
+			</f:SimpleForm>
+		</l:VerticalLayout>
+	</Dialog>
+</core:FragmentDefinition>

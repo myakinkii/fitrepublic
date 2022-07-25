@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>shareObjectDlgTitle}">
+		<!--<beginButton>-->
+		<!--	<Button text="{i18n>genericCopy}" press="copyLink"/>-->
+		<!--</beginButton>-->
+		<endButton>
+			<Button text="{i18n>genericClose}" press="closeDlg"/>
+		</endButton>
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" adjustLabelSpan="false">
+			<Label text="{i18n>shareObjectDlgLink}" />
+			<Link text="{/link}" press="copyLink" _href="{/link}" target="_blank" >
+				<layoutData> <l:GridData span="XL6 L8 M8 S8" /> </layoutData>
+			</Link>
+		</f:SimpleForm>
+	</Dialog>
+</core:FragmentDefinition>

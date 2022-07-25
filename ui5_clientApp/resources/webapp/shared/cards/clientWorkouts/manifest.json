@@ -1,0 +1,55 @@
+{
+	"sap.app": {
+		"type": "card",
+		"id": "ru.fitrepublic.cards.clientWorkouts",
+		"i18n": "i18n/i18n.properties"
+	},
+	"sap.card": {
+		"extension":"./cardExtension",
+		"type": "List",
+		"configuration": {
+			"destinations": {
+				"odata": { "name": "odata_srv" },
+				"rest": { "name": "rest_api" }
+			},
+			"parameters": {
+				"deviceId": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines device id for authentication"
+				},
+				"authToken": {
+					"value": "",
+					"type": "string",
+					"label": "Auth param",
+					"description": "Defines token for authentication"
+				}			
+			}		
+		},
+		"header": {
+			"title": "{{TITLE}}",
+			"subTitle": "{i18n>workoutsTotal}",
+			"type": "Numeric",
+			"data": {
+				"request": {
+					"url": "{{destinations.odata}}/ClientWorkoutsTotal?device={{parameters.deviceId}}&token={{parameters.authToken}}"
+				},
+				"path": "/d/results/0"
+			},
+			"mainIndicator": {
+				"number": "{total}",
+				"_unit": "{i18n>workoutsTotal}",
+				"trend": "Up",
+				"state": "Good"
+			},
+			"actions": [
+				{
+					"type": "Custom",
+					"enabled": true,
+					"parameters" :{ "dst":"workouts"}
+				}
+			]
+		}
+	}
+}

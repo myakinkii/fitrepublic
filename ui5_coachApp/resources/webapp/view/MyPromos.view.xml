@@ -1,0 +1,61 @@
+<mvc:View controllerName="ru.fitrepublic.ui5_coachApp.controller.MyPromos" 
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+<Page title="{i18n>mypromoCodesPageTitle}" showNavButton="true" navButtonPress="navBack" >
+	<FacetFilter
+		type="Simple"
+		showPersonalization="false"
+		showReset="true"
+		reset="resetFilters"
+		confirm="confirmFilters"
+		lists="{/filters}">
+			<FacetFilterList
+				title="{title}"
+				key="{key}"
+				mode="MultiSelect"
+				items="{path:'values', templateShareable: true}" >
+					<FacetFilterItem text="{text}" key="{key}"/>
+			</FacetFilterList>
+	</FacetFilter>
+	<SearchField search="handleSearch" />
+	<List id="promoList"
+		growing="true" 
+		growingThreshold="10"
+		items="{path:'odata>/MyPromos',sorter:{path:'createdAt',descending:true}}">
+		<ObjectListItem
+			number="{odata>id}"
+			title="{odata>description}"
+			_number="{ path:'odata>redeemed', formatter:'.formatActivated' }"
+			type="Active" 
+			press="displayPromo">
+			<firstStatus>
+				<ObjectStatus title="{i18n>promoType}" 
+					text="{ path:'odata>purchaseType', formatter:'.formatType' }"
+					state="{ path:'odata>purchaseType', formatter:'.formatState' }"
+					_state="{= ${odata>purchaseType}==='R'?'Error':'Success' }" />
+			</firstStatus>
+			<ObjectAttribute title="{i18n>promoRedeemed}" text="{ path:'odata>redeemed', formatter:'.formatActivated' }" />
+			<ObjectAttribute title="{i18n>promoCreatedAt}" text="{
+					path:'odata>createdAt', 
+					type:'sap.ui.model.type.DateTime', 
+					formatOptions:{ style:'medium' }
+				}" />
+			<ObjectAttribute visible="{= !!${odata>redeemed} }" title="{i18n>promoRedeemDate}" text="{
+					path:'odata>redeemDate', 
+					type:'sap.ui.model.type.DateTime', 
+					formatOptions:{ style:'medium' }
+				}" />
+			<ObjectAttribute visible="{= !!${odata>redeemed} }" title="{i18n>promoClient}" text="{odata>clientName}" />
+			<ObjectAttribute visible="{= !!${odata>gymName} }" title="{i18n>promoGym}" text="{odata>gymName}" />
+		</ObjectListItem>
+	</List>
+	
+	<footer>
+		<Toolbar>
+			<ToolbarSpacer />
+			<Button icon="sap-icon://add" press="addPromo" />
+		</Toolbar>
+	</footer>
+</Page>
+</mvc:View>

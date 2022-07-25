@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:l="sap.ui.layout"
+		xmlns:f="sap.ui.layout.form"
+		xmlns:u="sap.ui.unified"
+		xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>workoutAddDlgTitle}">
+		<beginButton>
+			<Button text="{i18n>genericOK}" type="Emphasized" press="confirmDate"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>genericCancel}" press="closeDlg"/>
+		</endButton>
+		<l:VerticalLayout class="sapUiContentPadding" width="100%">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" singleContainerFullSize="false">
+				<Label text="{i18n>workoutPurchase}" />
+				<Select id="purchaseSelect" visible="{/showPurchases}" forceSelection="false" selectedKey="{/selectedPurchase}" change="changePurchase"
+					items="{
+						path:'odata>/ClientPurchases',
+						sorter:[{path:'coachName'},{path:'purchaseType'}]
+					}">
+					<core:Item key="{odata>purchaseId}"
+						text="{ parts:[
+									{path:'odata>purchaseType'},
+									{path:'odata>coachName'},
+									{path:'odata>purchaseDescr'},
+									{path:'odata>purchaseQty'},
+									{path:'odata>purchaseExpDate'}
+								], formatter:'.formatPurchaseText' }"
+						_text="{odata>purchaseType} {odata>coachName} x {odata>workouts} " />
+				</Select>
+				<Label text="{i18n>workoutTemplate}" />
+				<Select id="templateSelect" visible="{/showTemplates}" forceSelection="false" 
+						selectedKey="{/selectedTemplate}" change="changeTemplate"
+					items="{
+						path:'odata>/MyWorkoutTemplates', 
+						sorter:[{path:'templateName'},{path:'workoutDescr'}] }">
+					<core:Item key="{odata>workoutId}" text="{odata>templateName} > {odata>workoutDescr}" />
+				</Select>				
+				<Label text="{i18n>workoutDate}" />
+				<Input value="{ path:'/timestamp', type:'sap.ui.model.type.Date', formatOptions:{ style:'medium' } }" enabled="false" />
+				<Label text="{i18n>workoutTime}" />
+				<TimePicker value="{/time}" valueFormat="HH:mm" displayFormat="HH:mm" minutesStep="30" required="true" />
+				<!--<DateTimePicker value="{/timestamp}" required="true" />-->
+			</f:SimpleForm>
+			<u:Calendar showWeekNumbers="false" firstDayOfWeek="1" select="handleCalendarSelect" />			
+		</l:VerticalLayout>
+	</Dialog>
+</core:FragmentDefinition>

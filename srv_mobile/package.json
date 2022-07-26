@@ -32,7 +32,7 @@
         "requires": {
             "db": {
                 "kind": "hana",
-                "model": "gen/csn.json"
+                "model": "gen/srv/csn.json"
             }
         }
     }

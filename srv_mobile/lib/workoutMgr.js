@@ -68,19 +68,20 @@ function createWorkoutClient(workoutData, profile, srv, tx){
 function createWorkout(workoutData, purchFilter, srv, tx){
 	const { Purchases, Workouts } = srv.entities;
 	// const tx = srv.transaction();	
+	const workout_id=uuidv1(); // this is done because dbSrv tx.create returns complex result instead of an entry
 	return tx.read(Purchases).where(purchFilter).then(function(purchases){
 		const purch=purchases&&purchases[0];
 		if (!purch) return Promise.reject({errCode: errors.NOT_ALLOWED});
 		return tx.create(Workouts).entries({
-			id:uuidv1(),
+			id:workout_id,
 			coach_id:purch.coach_id,
 			client_id:purch.owner_id,
 			purchase_id:workoutData.purchase_id,
 			timestamp:workoutData.timestamp
 		});
 	}).then(function(workout){
-		if (workoutData.template_id) return cloneWorkoutTemplate(workoutData.template_id, workout.id, srv, tx);
-		else return Promise.resolve(workout.id);
+		if (workoutData.template_id) return cloneWorkoutTemplate(workoutData.template_id, workout_id, srv, tx);
+		else return Promise.resolve(workout_id);
 	});
 }
 

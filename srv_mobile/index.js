@@ -246,7 +246,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('createWorkout', req => {
-			const tx=srv.tx();
+			// const tx=srv.tx();
+			const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return createWorkoutClient(req.data, profile, srv,tx);
 			}).then(function(workoutId){
@@ -256,7 +257,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('cloneWorkout', req => {
-			const tx=srv.tx();
+			// const tx=srv.tx();
+			const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return cloneWorkoutClient(req.data, profile, srv, tx);
 			}).then(function(workout_id){
@@ -507,7 +509,8 @@ conn.then(function(dbSrv){
 		});	
 		
 		srv.on ('createWorkout', req => {
-			const tx=srv.tx();
+			// const tx=srv.tx();
+			const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return createWorkoutCoach(req.data, profile, srv, tx);
 			}).then(function(workoutId){
@@ -517,7 +520,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('cloneWorkout', req => {
-			const tx=srv.tx();
+			// const tx=srv.tx();
+			const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return cloneWorkoutCoach(req.data, profile, srv, tx);
 			}).then(function(workout_id){

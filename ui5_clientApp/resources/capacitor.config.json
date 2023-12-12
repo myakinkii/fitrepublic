@@ -4,5 +4,6 @@
   "webDir": "dist",
   "server": {
     "androidScheme": "https"
-  }
+  },
+  "ios": { "contentInset": "always", "clipToBounds": true }
 }

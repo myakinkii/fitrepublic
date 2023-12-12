@@ -1,0 +1,8 @@
+{
+  "appId": "ru.fitrepublic.coachApp",
+  "appName": "f-r coach",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

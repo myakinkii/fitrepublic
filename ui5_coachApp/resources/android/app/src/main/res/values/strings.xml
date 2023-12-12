@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">f-r coach</string>
+    <string name="title_activity_main">f-r coach</string>
+    <string name="package_name">ru.fitrepublic.coachApp</string>
+    <string name="custom_url_scheme">ru.fitrepublic.coachApp</string>
+</resources>

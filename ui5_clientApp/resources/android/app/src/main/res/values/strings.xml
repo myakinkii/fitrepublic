@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">f-r</string>
+    <string name="title_activity_main">f-r</string>
+    <string name="package_name">ru.fitrepublic.clientApp</string>
+    <string name="custom_url_scheme">ru.fitrepublic.clientApp</string>
+</resources>

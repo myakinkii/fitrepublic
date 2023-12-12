@@ -15,7 +15,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "https://backend.fit-republic.ru/odata/coach",
+				"uri": "/odata/coach",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"

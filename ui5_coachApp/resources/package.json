@@ -4,11 +4,24 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run ui5:build",
+    "ui5:build": "ui5 build self-contained --all",
+    "webpack:build": "npx webpack",
+    "cap:assets": "npx @capacitor/assets generate --ios --android",
+    "cap:sync": "cap sync",
+    "cap:run": "cap run",
+    "cap:open": "cap open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@capacitor/android": "^5.5.1",
+    "@capacitor/core": "^5.5.1",
+    "@capacitor/ios": "^5.5.1",
     "ui5-middleware-simpleproxy": "^0.8.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.1",
+    "@capacitor/cli": "^5.5.1"
   }
 }

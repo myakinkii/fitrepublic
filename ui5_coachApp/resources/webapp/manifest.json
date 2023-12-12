@@ -15,7 +15,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/odata/coach",
+				"uri": "https://backend.fit-republic.ru/odata/coach",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0"
@@ -75,6 +75,8 @@
 		"resources": {
 			"css": [{
 				"uri": "shared/css/style.css"
+			},{
+				"uri": "style.css"
 			}]
 		},
 		"routing": {

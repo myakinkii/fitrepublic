@@ -6,6 +6,9 @@ app/purchases
 app/settings
 srv_mobile/gen
 
+#ui
+dist
+
 # CAP
 _out
 .cds_gen.log

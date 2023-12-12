@@ -1,0 +1,8 @@
+{
+  "appId": "ru.fitrepublic.clientApp",
+  "appName": "f-r",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

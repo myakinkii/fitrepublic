@@ -58,7 +58,6 @@ sap.ui.define(["ru/fitrepublic/shared/appMgr", "sap/ui/model/json/JSONModel" ], 
 		displayPaymentPage:function(purchaseId){
 			var result={id:purchaseId};
 			var url=AppMgr.getCompletePaymentUrl(purchaseId);
-			return AppMgr.promisedGetJSON(url);
 			return new Promise(function(resolve,reject){
 				if ( typeof cordova !== "undefined" && cordova.InAppBrowser) {
 					var ref = cordova.InAppBrowser.open(url, '_blank', 'location=yes');

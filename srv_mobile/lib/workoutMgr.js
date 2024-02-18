@@ -37,7 +37,7 @@ function getCoachCalendar(profile,srv,tx){
 	// 		"client.nickName as clientName "+
 	// 	"} where coach.id='"+profile.id+"'"
 	// );
-	const workoutQuery=cds.parse.cql( "SELECT from V_Calendar { * } where coachId='"+profile.id+"'");
+	const workoutQuery=cds.parse.cql( "SELECT from V_Calendar { * } where coachId='"+profile.id+"' order by timestamp desc limit 5000");
 	return tx.run(workoutQuery).then(function(res){
 		const calendar=res.map(function(item){
 			return {

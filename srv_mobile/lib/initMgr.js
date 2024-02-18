@@ -183,11 +183,11 @@ function getClientData(deviceId, authToken, dbSrv, tx){
 	const {Clients, Workouts } = dbSrv.entities("ru.fitrepublic.base")
 	let user
 	return tx.run(SELECT.one(Clients).where({deviceId, authToken})).then(function(profile){
-		user = profile
+		user = profile || {}
 		return tx.run(SELECT(Workouts).columns('id').where({client_id:user.id}))
 	}).then(function(workouts){
 		user.workouts = workouts.map(w => w.id)
-		return user
+		return user.id ? user : null
 	})
 }
 

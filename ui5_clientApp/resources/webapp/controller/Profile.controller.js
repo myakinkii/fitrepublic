@@ -74,6 +74,13 @@ sap.ui.define([ "ru/fitrepublic/shared/controller/BaseController", "ru/fitrepubl
 			MessageBox.confirm(this.geti18n('profileConfirmReset'), function(action) {
 				if (action == MessageBox.Action.OK) AppMgr.resetProfile();
 			});
-		}		
+		},
+		
+		dropUser:function(){
+			var backendUrl = AppMgr.cardsDstResolver('rest_api') // dirty ;(
+			var profile=this.getView().getModel().getProperty('/profile');
+			var url = backendUrl+ "/drop/"+profile.deviceId+"/"+profile.authToken+"/x"
+			window.open(url, '_blank', 'location=yes');
+		}
 	});
 });

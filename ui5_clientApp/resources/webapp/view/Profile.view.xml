@@ -61,6 +61,10 @@
                 <!--<InputListItem label="{i18n>profileOpenHelp}">-->
                 <!--    <Link text="manual.pdf" target="_blank" href="http://backend.fit-republic.ru/docs/client/manual.pdf" />-->
                 <!--</InputListItem>-->
+				<GroupHeaderListItem title="{i18n>profileDataGroup}" />
+                <InputListItem label="{i18n>profileData}">
+                   <Link emphasized="true" text="{i18n>profileDataDrop}" press="dropUser" />
+                </InputListItem>
 			</List>
 		</Panel>
 

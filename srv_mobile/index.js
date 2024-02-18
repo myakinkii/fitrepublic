@@ -15,7 +15,10 @@ const conn = cds.connect("db");
 const { errors } = require('./lib/constants');
 const { createLink, resolveLink, renderPageTemplate } = require('./lib/shortLinkMgr');
 const { getSettings } = require('./lib/settingsMgr');
-const { onboardClient, onboardCoach, initClientApp, initCoachApp  } = require('./lib/initMgr');
+const { 
+	onboardClient, onboardCoach, initClientApp, initCoachApp, 
+	getClientData, dropClientData, renderDropNotFoundPage, renderDropPage 
+} = require('./lib/initMgr');
 const { searchStuff, getPromoData, getNewContentSearch, getNewWorkoutsSearch, getNewClientsSearch } = require('./lib/searchAndPromoMgr');
 const { 
 	calcPurchaseOptions, makePurchase, addPayment, completePaymentClient, completePaymentCoach,
@@ -37,6 +40,20 @@ conn.then(function(dbSrv){
 	app.get('/', (req, res) => res.send("ok\n"));
 	
 	cds.serve("PublicService").in(app).with(function(srv){
+
+		app.get('/rest/client/drop/:device?/:token?/:dryrun?', function(req,res){
+			const deviceId = req.params.device, authToken = req.params.token, dry = req.params.dryrun;
+			const locale = req.headers["accept-language"] || "ru"
+			const tx = dbSrv.tx();
+			return getClientData(deviceId, authToken, dbSrv, tx).then(function(userData){ 
+				if (!userData) return renderDropNotFoundPage(locale, res)
+				if (dry) return renderDropPage(userData, locale, res)
+				else return dropClientData(userData, res, dbSrv, tx)
+			}).then(function(){ 
+				tx.commit();
+				res.end();
+			}).catch(getRestCatcher(res,tx));
+		});
 		
 		srv.before('READ', "Settings", req => {
 			if (isOdataReq(req)) req.reject(403, {errCode: errors.NOT_ALLOWED}); // forbid "external" read of Settings

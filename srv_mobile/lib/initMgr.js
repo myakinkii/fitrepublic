@@ -179,9 +179,106 @@ function onboardCoach(deviceId,authToken,srv,tx){
 	});
 }
 
+function getClientData(deviceId, authToken, dbSrv, tx){
+	const {Clients, Workouts } = dbSrv.entities("ru.fitrepublic.base")
+	let user
+	return tx.run(SELECT.one(Clients).where({deviceId, authToken})).then(function(profile){
+		user = profile
+		return tx.run(SELECT(Workouts).columns('id').where({client_id:user.id}))
+	}).then(function(workouts){
+		user.workouts = workouts.map(w => w.id)
+		return user
+	})
+}
+
+function dropClientData(user, res, dbSrv, tx){
+	const {Clients, Workouts, Excercises, Purchases} = dbSrv.entities("ru.fitrepublic.base")
+	return tx.run([
+		DELETE.from(Excercises).where({ workout_id: user.workouts }),
+		DELETE.from(Workouts).where({ client_id: user.id }),
+		DELETE.from(Purchases).where({ owner_id: user.id }),
+		DELETE.from(Clients).where({ id: user.id })
+	]).then(function(done){
+		res.writeHead(200,{"Content-Type" : "text/plain"})
+		res.write('OK')
+		return Promise.resolve()
+	})
+}
+
+const TEXTS = {
+	en:{
+		HOWTO_TITLE:"To delete your user data",
+		HOWTO_TEXT: "Please, open the \"Clear my data\" link in your profile in f-r app",
+		APP_DELETED:"If you already uninstalled f-r app,",
+		DROP_MAILTO:"Contact our support",
+		DROP_MAIL_INFO:"We will need your nickname and recent workouts data in order to identify your profile",
+		MAIL_SUBJECT:"Clear user data",
+		DROP_USER:"Clear profile data for user ",
+		WORKOUTS_NUM:"number of workouts",
+		DROP_INFO:"There will be no way to recover your profile",
+		DROP_CONFIRM:"Proceed!"
+	},
+	ru: {
+		HOWTO_TITLE: "Чтобы удалить данные пользователя,",
+		HOWTO_TEXT: "Пройдите по ссылке \"Удаление данных\" в вашем профеле в приложении f-r",
+		APP_DELETED:"Если вы уже удалили приложение,",
+		DROP_MAILTO:"Напишите нам в поддержку",
+		DROP_MAIL_INFO:"Нам потребуются данные о проведенных тренировках и ваш никнейм, чтобы идентифицировать вашу учетную запись",
+		MAIL_SUBJECT:"Удаление данных пользователя",
+		DROP_USER:"Удалить данные пользователя ",
+		WORKOUTS_NUM:"проведено тренировок",
+		DROP_INFO:"Восстановление профиля будет невозможно",
+		DROP_CONFIRM:"Подтверждаю!"
+	}
+}
+
+function getText(locale){
+	return function(key){ return TEXTS[locale] ? TEXTS[locale][key] : TEXTS["ru"][key] }
+}
+
+function renderDropNotFoundPage(locale, res){
+	const t = getText(locale)
+	res.writeHead(200,{"Content-Type" : "text/html"});
+	res.write('<head><meta name="viewport" content="width=device-width" charset="utf-8"></head>');
+	res.write('<body><div style="margin:auto;text-align:center;">');
+
+	res.write('<br><br><br><span style="font-size:1.4rem;" >'+t("HOWTO_TITLE")+'</span>')
+	res.write('<br><span style="font-size:1.2rem;">'+t("HOWTO_TEXT")+'</span>')
+
+	res.write('<br><br><br><span style="font-size:1.4rem;" >'+t("APP_DELETED")+'</span>')
+	res.write('<br><a href="mailto:info@fit-republic.ru?subject='+encodeURIComponent(t("MAIL_SUBJECT"))+'" style="font-size:1.2rem;" >'+t("DROP_MAILTO")+'</a>')
+	res.write('<br><br><span style="font-size:1.1rem;">'+t("DROP_MAIL_INFO")+'</span>')
+
+
+	res.write("</div></body>");
+	res.write("</html>");
+	return Promise.resolve(true);
+}
+
+function renderDropPage(user, locale, res){
+	const t = getText(locale)
+	var dropUrl="/rest/client/drop/"+user.deviceId+"/"+user.authToken;
+	res.writeHead(200,{"Content-Type" : "text/html"});
+	res.write('<head><meta name="viewport" content="width=device-width" charset="utf-8"></head>');
+	res.write('<body><div style="margin:auto;text-align:center;">');
+	
+	res.write('<br><br><br><span style="font-size:1.4rem;" >'+`${t("DROP_USER")} "${user.nickName || user.id}" (${t('WORKOUTS_NUM')}: ${user.workouts.length})`+'</span>')
+	res.write('<br><span style="font-size:1.2rem;">'+t("DROP_INFO")+'</span>')
+
+	res.write('<br><br><a href="'+dropUrl+'" style="font-size:1.6rem;" >'+t("DROP_CONFIRM")+'</a>')
+	
+	res.write("</div></body>");
+	res.write("</html>");
+	return Promise.resolve(true);
+}
+
 module.exports={
 	initClientApp:initClientApp,
 	initCoachApp:initCoachApp,
 	onboardClient:onboardClient,
-	onboardCoach:onboardCoach
+	onboardCoach:onboardCoach,
+	renderDropNotFoundPage:renderDropNotFoundPage,
+	renderDropPage:renderDropPage,
+	getClientData:getClientData,
+	dropClientData:dropClientData,
 };

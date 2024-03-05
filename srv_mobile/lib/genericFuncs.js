@@ -2,7 +2,8 @@ const { errors } = require('./constants');
 
 const debug=true;
 
-function isOdataReq(req){  return req && req._ && req._.req && req.query==req._.query ? true : false; }
+// function isOdataReq(req){  return req && req._ && req._.req && req.query==req._.query ? true : false; }
+function isOdataReq(req){ return !!req.protocol }
 
 function protectService(srv,config){
 	const actions=['READ', 'CREATE', 'UPDATE', 'DELETE'];

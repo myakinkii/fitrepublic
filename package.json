@@ -5,42 +5,33 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "dependencies": {
-    "@sap/cds": "^6",
+    "@cap-js/sqlite": "^1.5.1",
+    "@sap/cds": "^7.7.0",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.3",
     "express": "^4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@ui5/cli": "^2.14.10",
-    "sqlite3": "^5.0.4",
     "ui5-middleware-simpleproxy": "^0.9.0"
   },
   "scripts": {
     "build": "cds build",
-    "_deploy": "cds deploy",
+    "deploy": "cds deploy",
+    "deploy:model": "cds deploy --model-only",
     "start": "cds run",
     "memory": "cds run --in-memory",
-    "local": " CDS_ENV=local cds run",
-    "deploy": "cds deploy --to sqlite:my.db --no-save"
+    "local": "cds run",
+    "_deploy": "cds deploy --to sqlite:my.db --no-save"
   },
   "cds": {
-    "[local]": {
-      "requires": {
-        "db": {
-          "kind": "sqlite",
-          "credentials": {
-            "database": "my.db"
-          }
-        }
-      }
-    },
     "requires": {
       "db": {
-        "kind": "hana",
-        "model": [
-          "db",
-          "srv"
-        ]
+        "kind": "sqlite",
+        "schema_evolution": "auto",
+        "credentials": {
+          "database": "my.db"
+        }
       }
     },
     "odata": {

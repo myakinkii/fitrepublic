@@ -117,6 +117,15 @@ conn.then(function(dbSrv){
 			entity:"Profiles",
 			"READ":filterMe("id"),
 			"CREATE":forbidProfileCreation
+		},{ 
+			entity:"Purchases",
+			"READ":filterMe("client_id")
+		},{ 
+			entity:"Workouts",
+			"READ":filterMe("client_id")
+		},{ 
+			entity:"Excercises",
+			"READ":filterMe("id") // filters out everything with direct request
 		}]);
 		
 		srv.before('READ', "CoachBilling", req => {
@@ -426,8 +435,21 @@ conn.then(function(dbSrv){
 			}
 			
 		},{ 
-			entity:"Profiles", 
+			entity:"Profiles",
+			"READ":filterMe("id"),
 			"CREATE":forbidProfileCreation
+		},{ 
+			entity:"Purchases",
+			"READ":filterMe("coach_id")
+		},{ 
+			entity:"Workouts",
+			"READ":filterMe("coach_id")
+		},{ 
+			entity:"Excercises",
+			"READ":filterMe("id") // filters out everything with direct request
+		},{ 
+			entity:"Clients",
+			"READ":filterMe("id") // filters out everything with direct request
 		}]);
 
 		const baseUrl = '/rest/coach';

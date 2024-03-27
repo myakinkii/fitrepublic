@@ -22,6 +22,7 @@
         "[local]": {
             "requires": {
                 "db": {
+                    "impl": "@cap-js/sqlite",
                     "kind": "sqlite",
                     "credentials": {
                         "database": "../my.db"

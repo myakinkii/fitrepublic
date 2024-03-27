@@ -117,6 +117,15 @@ conn.then(function(dbSrv){
 			entity:"Profiles",
 			"READ":filterMe("id"),
 			"CREATE":forbidProfileCreation
+		},{ 
+			entity:"Purchases",
+			"READ":filterMe("client_id")
+		},{ 
+			entity:"Workouts",
+			"READ":filterMe("client_id")
+		},{ 
+			entity:"Excercises",
+			"READ":filterMe("id") // filters out everything with direct request
 		}]);
 		
 		srv.before('READ', "CoachBilling", req => {
@@ -263,8 +272,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('createWorkout', req => {
-			// const tx=srv.tx();
-			const tx=dbSrv.tx();
+			const tx=srv.tx();
+			// const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return createWorkoutClient(req.data, profile, srv,tx);
 			}).then(function(workoutId){
@@ -274,8 +283,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('cloneWorkout', req => {
-			// const tx=srv.tx();
-			const tx=dbSrv.tx();
+			const tx=srv.tx();
+			// const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return cloneWorkoutClient(req.data, profile, srv, tx);
 			}).then(function(workout_id){
@@ -343,25 +352,25 @@ conn.then(function(dbSrv){
 			return next();
 		});
 
-		// override standard handler with direct db write due to strange sporadic tx locks
-		srv.on(['CREATE'], 'Excercises', req => {
-			const { Excercises } = dbSrv.entities;
-			const tx=dbSrv.tx();
-			return tx.create(Excercises).entries(req.data).then(function(res){
-				tx.commit();
-				return req.reply(req.data);
-			}).catch(getCatcher(req,tx));
-		});
+		// // override standard handler with direct db write due to strange sporadic tx locks
+		// srv.on(['CREATE'], 'Excercises', req => {
+		// 	const { Excercises } = dbSrv.entities;
+		// 	const tx=dbSrv.tx();
+		// 	return tx.create(Excercises).entries(req.data).then(function(res){
+		// 		tx.commit();
+		// 		return req.reply(req.data);
+		// 	}).catch(getCatcher(req,tx));
+		// });
 
-		// override standard handler with direct db write due to strange sporadic tx locks
-		srv.on(['UPDATE'], 'Excercises', req => {
-			const { Excercises } = dbSrv.entities;
-			const tx=dbSrv.tx();
-			return tx.update(Excercises,{id:req.data.id}).with(req.data).then(function(res){
-				tx.commit();
-				return req.reply(req.data);
-			}).catch(getCatcher(req,tx));
-		});
+		// // override standard handler with direct db write due to strange sporadic tx locks
+		// srv.on(['UPDATE'], 'Excercises', req => {
+		// 	const { Excercises } = dbSrv.entities;
+		// 	const tx=dbSrv.tx();
+		// 	return tx.update(Excercises,{id:req.data.id}).with(req.data).then(function(res){
+		// 		tx.commit();
+		// 		return req.reply(req.data);
+		// 	}).catch(getCatcher(req,tx));
+		// });
 
 	});
 
@@ -426,8 +435,21 @@ conn.then(function(dbSrv){
 			}
 			
 		},{ 
-			entity:"Profiles", 
+			entity:"Profiles",
+			"READ":filterMe("id"),
 			"CREATE":forbidProfileCreation
+		},{ 
+			entity:"Purchases",
+			"READ":filterMe("coach_id")
+		},{ 
+			entity:"Workouts",
+			"READ":filterMe("coach_id")
+		},{ 
+			entity:"Excercises",
+			"READ":filterMe("id") // filters out everything with direct request
+		},{ 
+			entity:"Clients",
+			"READ":filterMe("id") // filters out everything with direct request
 		}]);
 
 		const baseUrl = '/rest/coach';
@@ -526,8 +548,8 @@ conn.then(function(dbSrv){
 		});	
 		
 		srv.on ('createWorkout', req => {
-			// const tx=srv.tx();
-			const tx=dbSrv.tx();
+			const tx=srv.tx();
+			// const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return createWorkoutCoach(req.data, profile, srv, tx);
 			}).then(function(workoutId){
@@ -537,8 +559,8 @@ conn.then(function(dbSrv){
 		});
 		
 		srv.on ('cloneWorkout', req => {
-			// const tx=srv.tx();
-			const tx=dbSrv.tx();
+			const tx=srv.tx();
+			// const tx=dbSrv.tx();
 			return basicChecks(srv,req._.req).then(function(profile){
 				return cloneWorkoutCoach(req.data, profile, srv, tx);
 			}).then(function(workout_id){
@@ -627,25 +649,25 @@ conn.then(function(dbSrv){
 			return next();
 		});
 		
-		// override standard handler with direct db write due to strange sporadic tx locks
-		srv.on(['CREATE'], 'Excercises', req => {
-			const { Excercises } = dbSrv.entities;
-			const tx=dbSrv.tx();
-			return tx.create(Excercises).entries(req.data).then(function(res){
-				tx.commit();
-				return req.reply(req.data);
-			}).catch(getCatcher(req,tx));
-		});
+		// // override standard handler with direct db write due to strange sporadic tx locks
+		// srv.on(['CREATE'], 'Excercises', req => {
+		// 	const { Excercises } = dbSrv.entities;
+		// 	const tx=dbSrv.tx();
+		// 	return tx.create(Excercises).entries(req.data).then(function(res){
+		// 		tx.commit();
+		// 		return req.reply(req.data);
+		// 	}).catch(getCatcher(req,tx));
+		// });
 
-		// override standard handler with direct db write due to strange sporadic tx locks
-		srv.on(['UPDATE'], 'Excercises', req => {
-			const { Excercises } = dbSrv.entities;
-			const tx=dbSrv.tx();
-			return tx.update(Excercises,{id:req.data.id}).with(req.data).then(function(res){
-				tx.commit();
-				return req.reply(req.data);
-			}).catch(getCatcher(req,tx));
-		});
+		// // override standard handler with direct db write due to strange sporadic tx locks
+		// srv.on(['UPDATE'], 'Excercises', req => {
+		// 	const { Excercises } = dbSrv.entities;
+		// 	const tx=dbSrv.tx();
+		// 	return tx.update(Excercises,{id:req.data.id}).with(req.data).then(function(res){
+		// 		tx.commit();
+		// 		return req.reply(req.data);
+		// 	}).catch(getCatcher(req,tx));
+		// });
 
 	});
 

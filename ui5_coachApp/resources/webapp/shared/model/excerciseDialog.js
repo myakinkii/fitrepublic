@@ -186,19 +186,10 @@ sap.ui.define(["ru/fitrepublic/shared/appMgr",
 		
 		submitChanges:function(){
 			if (!this.validateForm()) return;
-			this.dlg.close();
-			var odataMdl=AppMgr.getOdataModel();
-			odataMdl.setUseBatch(true); // otherwise submitChanges callback is not called
-			odataMdl.submitChanges({
-				success:function(re){
-					odataMdl.setUseBatch(false);
-					extResolve(re);
-				},
-				error:function(err){
-					odataMdl.setUseBatch(false);
-					extReject(err);
-				}
-			});
+			AppMgr.promisedSubmitChanges().then(function(firstData){
+				this.dlg.close();
+				extResolve();
+			}.bind(this)).catch(extReject);
 		}
 		
 	};

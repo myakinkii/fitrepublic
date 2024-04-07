@@ -3,24 +3,29 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="UTF-8">
-        <title>ui5client</title>
+        <title>ui5_clientApp</title>
         <script id="sap-ui-bootstrap"
         	src="resources/sap-ui-core.js"
             data-sap-ui-libs="sap.m"
             data-sap-ui-theme="fitrepublic"
             data-sap-ui-compatVersion="edge"
-            data-sap-ui-theme-roots='{"fitrepublic" : "./theme/UI5","fitrepublicdark" : "./theme/UI5" }'
-            data-sap-ui-resourceroots='{"ru.fitrepublic.ui5_coachApp":"./","ru.fitrepublic.shared": "./shared/"}'>
+            data-sap-ui-theme-roots='{"fitrepublic" : "./UI5","fitrepublicdark" : "./UI5" }'
+            data-sap-ui-resourceroots='{"ru.fitrepublic.ui5_clientApp":"./","ru.fitrepublic.shared": "./shared/"}'>
         </script>
         <script type="text/javascript">
+        	window.handleOpenURL=function(url){
+        		if (!window.localStorage.getItem('url')){
+                	window.localStorage.setItem('url',url);
+                	window.location.reload();
+        		}
+            }
 			var app = {
-				initialize: function() { document.addEventListener('deviceready', this.onDeviceReady.bind(this), false); },
-				onDeviceReady: function() {
+				initialize: function() {
 					var oScript = document.createElement("script");
 					oScript.text = "\
                         sap.ui.getCore().attachInit(function() {\
                         	new sap.m.Shell({\
-                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_coachApp\" })\
+                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_clientApp\" })\
                         	}).placeAt(\"content\");\
                         });\
 					";
@@ -29,7 +34,7 @@
                         sap.ui.getCore().attachInit(function() {\
                         	sap.ui.getCore().applyTheme(\"fitrepublicdark\");\
                         	new sap.m.Shell({\
-                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_coachApp\" })\
+                        		app: new sap.ui.core.ComponentContainer({ height : \"100%\", name : \"ru.fitrepublic.ui5_clientApp\" })\
                         	}).placeAt(\"content\");\
                         });\
 					";
@@ -38,7 +43,6 @@
 			};
 			app.initialize();
 		</script>
-        <script type="text/javascript" src="cordova.js"></script>
     </head>
     <body class="sapUiBody" id="content"></body>
 </html>

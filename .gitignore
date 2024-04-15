@@ -13,6 +13,7 @@ dist
 _out
 .cds_gen.log
 *.db
+*.db-*
 connection.properties
 default-*.json
 gen/

@@ -172,11 +172,13 @@ sap.ui.define([
 				odataMdl.setUseBatch(true);
 				odataMdl.submitChanges({ 
 					success:function(re){
+						odataMdl.resetChanges(); // somehow timestamp change gets stuck in pendingChanges
 						odataMdl.setUseBatch(false);
 						if (re["__batchResponses"]) resolve(re["__batchResponses"][0]["__changeResponses"][0].data);
 						else resolve(null);
 					},
 					error:function(err){
+						odataMdl.resetChanges(); // just in case
 						odataMdl.setUseBatch(false);
 						reject(err);
 					}
@@ -380,7 +382,7 @@ sap.ui.define([
 			return new ODataModel({
 				defaultBindingMode: "TwoWay",
 				defaultCountMode: "Inline",
-				defaultUpdateMethod: "PATCH",
+				defaultUpdateMethod: "MERGE",
 				refreshAfterChange: false,
 				useBatch:false,
 				serviceUrl:pars.url,
